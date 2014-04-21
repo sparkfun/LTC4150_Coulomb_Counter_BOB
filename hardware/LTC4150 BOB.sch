@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,16 +53,16 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
@@ -7974,11 +7974,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <sheet>
 <plain>
 <text x="172.72" y="7.62" size="2.54" layer="94">M Grusin</text>
-<text x="238.76" y="7.62" size="2.54" layer="94">01</text>
-<text x="165.1" y="71.12" size="1.778" layer="97">CLOSE SJ3 AND SJ4 FOR 3.3V VCC</text>
+<text x="238.76" y="7.62" size="2.54" layer="94">10</text>
+<text x="165.1" y="71.12" size="1.778" layer="97">CLOSE SJ3 AND SJ4 FOR 3.3V VIO</text>
 <text x="165.1" y="81.28" size="1.778" layer="97">OPEN SJ1 TO USE !SHDN! INPUT</text>
-<text x="66.04" y="144.78" size="1.778" layer="97">8.5V MAX</text>
-<text x="165.1" y="68.58" size="1.778" layer="97">LEAVE OPEN FOR 5V VCC</text>
+<text x="55.88" y="144.78" size="1.778" layer="97">CURRENT SENSE: 8.5V MAX</text>
+<text x="165.1" y="68.58" size="1.778" layer="97">LEAVE OPEN FOR 5V VIO</text>
 <text x="165.1" y="144.78" size="1.778" layer="97">AT 1A (MAX), !INT! WILL PULSE AT</text>
 <text x="165.1" y="142.24" size="1.778" layer="97">1.6275 Hz = 0.6144 S</text>
 <text x="165.1" y="137.16" size="1.778" layer="97">1 !INT! = 0.0001707 Ah</text>
@@ -7987,7 +7987,8 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <rectangle x1="146.558" y1="108.712" x2="148.082" y2="109.728" layer="94"/>
 <rectangle x1="167.132" y1="118.364" x2="168.148" y2="120.142" layer="94"/>
 <text x="55.88" y="139.7" size="1.778" layer="97">0.05 OHMS = 1.0A MAX</text>
-<text x="55.88" y="137.16" size="1.778" layer="97">0.10 OHMS = 0.5A MAX</text>
+<text x="190.5" y="127" size="1.778" layer="97">VIO: 3.3V OR 5V</text>
+<text x="190.5" y="124.46" size="1.778" layer="97">(SEE SJ3 AND SJ4)</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -8004,7 +8005,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="R4" gate="G$1" x="137.16" y="109.22"/>
 <instance part="GND1" gate="1" x="132.08" y="76.2"/>
 <instance part="GND2" gate="1" x="152.4" y="76.2"/>
-<instance part="GND3" gate="1" x="81.28" y="81.28"/>
+<instance part="GND3" gate="1" x="81.28" y="86.36"/>
 <instance part="JP1" gate="G$1" x="35.56" y="124.46" rot="MR180"/>
 <instance part="JP2" gate="G$1" x="45.72" y="121.92"/>
 <instance part="JP3" gate="G$1" x="99.06" y="121.92" rot="MR0"/>
@@ -8169,7 +8170,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="C1" gate="G$1" pin="2"/>
 <wire x1="99.06" y1="93.98" x2="81.28" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="93.98" x2="81.28" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="81.28" y1="93.98" x2="81.28" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="81.28" y1="93.98" x2="81.28" y2="88.9" width="0.1524" layer="91"/>
 <junction x="81.28" y="93.98"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
@@ -8219,7 +8220,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <junction x="76.2" y="114.3"/>
 </segment>
 </net>
-<net name="VCC" class="0">
+<net name="VIO" class="0">
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="152.4" y1="124.46" x2="152.4" y2="127" width="0.1524" layer="91"/>
