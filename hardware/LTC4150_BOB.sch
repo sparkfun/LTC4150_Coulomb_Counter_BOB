@@ -7846,20 +7846,31 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <plain>
 <text x="172.72" y="7.62" size="2.54" layer="94">M Grusin</text>
 <text x="238.76" y="7.62" size="2.54" layer="94">03</text>
-<text x="165.1" y="71.12" size="1.778" layer="97">CLOSE SJ3 AND SJ4 FOR 3.3V VIO</text>
+<text x="165.1" y="66.04" size="1.778" layer="97">CLOSE SJ3 AND SJ4 FOR 3.3V VIO</text>
 <text x="165.1" y="81.28" size="1.778" layer="97">OPEN SJ1 TO USE !SHDN! INPUT</text>
-<text x="55.88" y="144.78" size="1.778" layer="97">CURRENT SENSE: 8.5V MAX</text>
-<text x="165.1" y="68.58" size="1.778" layer="97">LEAVE OPEN FOR 5V VIO</text>
-<text x="165.1" y="144.78" size="1.778" layer="97">AT 1A (MAX), !INT! WILL PULSE AT</text>
-<text x="165.1" y="142.24" size="1.778" layer="97">1.6275 Hz = 0.6144 S</text>
-<text x="165.1" y="137.16" size="1.778" layer="97">1 !INT! = 0.0001707 Ah</text>
-<text x="165.1" y="134.62" size="1.778" layer="97">5859 !INT!S = 1 Ah</text>
-<text x="165.1" y="76.2" size="1.778" layer="97">OPEN SJ2 TO USE !CLR! INPUT</text>
+<text x="45.72" y="149.86" size="1.778" layer="97">CURRENT SENSE TERMINALS:</text>
+<text x="165.1" y="63.5" size="1.778" layer="97">LEAVE BOTH OPEN FOR 5V VIO</text>
+<text x="165.1" y="142.24" size="1.778" layer="97">AT 1A (MAX), !INT! WILL PULSE AT</text>
+<text x="165.1" y="139.7" size="1.778" layer="97">1.6275 Hz = 0.6144 S</text>
+<text x="165.1" y="149.86" size="1.778" layer="97">1 !INT! = 0.0001707 Ah</text>
+<text x="165.1" y="147.32" size="1.778" layer="97">5859 !INT!S = 1 Ah</text>
+<text x="165.1" y="73.66" size="1.778" layer="97">OPEN SJ2 TO USE !CLR! INPUT</text>
 <rectangle x1="149.098" y1="108.712" x2="150.622" y2="109.728" layer="94"/>
 <rectangle x1="167.132" y1="118.364" x2="168.148" y2="120.142" layer="94"/>
-<text x="55.88" y="139.7" size="1.778" layer="97">0.05 OHMS = 1.0A MAX</text>
+<text x="45.72" y="142.24" size="1.778" layer="97">1.0A MAX (FOR 0.05 OHM SENSE RESISTOR)</text>
 <text x="190.5" y="127" size="1.778" layer="97">VIO: 3.3V OR 5V</text>
 <text x="190.5" y="124.46" size="1.778" layer="97">(SEE SJ3 AND SJ4)</text>
+<text x="165.1" y="78.74" size="1.778" layer="97">LEAVE CLOSED TO KEEP BOARD ENABLED</text>
+<text x="165.1" y="71.12" size="1.778" layer="97">LEAVE CLOSED FOR AUTOMATIC CLEAR</text>
+<text x="45.72" y="144.78" size="1.778" layer="97">8.5V MAX</text>
+<text x="45.72" y="137.16" size="1.778" layer="97">POL SIGNAL:</text>
+<text x="66.04" y="137.16" size="1.778" layer="97">H</text>
+<text x="74.93" y="137.16" size="1.778" layer="97">L</text>
+<wire x1="68.072" y1="138.176" x2="69.088" y2="138.938" width="0.1524" layer="97"/>
+<wire x1="68.072" y1="138.176" x2="69.088" y2="137.414" width="0.1524" layer="97"/>
+<wire x1="73.152" y1="138.938" x2="74.168" y2="138.176" width="0.1524" layer="97"/>
+<wire x1="74.168" y1="138.176" x2="73.152" y2="137.414" width="0.1524" layer="97"/>
+<wire x1="74.168" y1="138.176" x2="68.072" y2="138.176" width="0.1524" layer="97"/>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>

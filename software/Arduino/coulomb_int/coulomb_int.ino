@@ -1,19 +1,32 @@
 /*
-VCC to VCC
+Before connecting this board to your Arduino, double check that
+the four solder jumpers are set appropriately.
+
+SJ1 / SJ2 (top of board):
+
+For this sketch, leave SJ1 and SJ2 closed (soldered).
+This enables the board and clears interrupts automatically.
+
+SJ3 / SJ4 (bottom of board):
+
+Leave both SJ3 and SJ4 open (unsoldered) for 5V Arduinos.
+Close (solder) both SJ3 and SJ4 for 3.3V Arduinos.
+
+VIO to VCC
 GND to GND
-INT to 2
+INT to 3
 POL to 4
-
-Close SJ1 and SJ2
-
-For 3.3V Arduinos, close SJ3 and SJ4 (on the bottom of the board)
-For 5V Arduinos, open SJ3 and SJ4
 
 */
 
+#define VIO 2
+#define INT 3 // On Uno and Pro, pins 2 and 3 support interrupts
+#define POL 4
+#define GND 5
+#define CLR 6
+#define SHDN 7
 
-// 12140000 51mA 4.026
-// 15120000 39mA
+#define LED 13
 
 volatile boolean isrflag = false;
 volatile long int time, lasttime;
@@ -26,17 +39,31 @@ volatile double charge = 2000.0;
 
 void setup()
 {
-  pinMode(2,INPUT);
-  //digitalWrite(2,HIGH);
-  pinMode(4,INPUT);
-  pinMode(13,OUTPUT);
+  pinMode(GND,OUTPUT);
+  digitalWrite(GND,LOW);
+
+  pinMode(VIO,OUTPUT);
+  digitalWrite(VIO,HIGH);
+
+  pinMode(SHDN,OUTPUT);
+  digitalWrite(SHDN,HIGH);
+
+  pinMode(CLR,OUTPUT);
+  digitalWrite(CLR,HIGH);
+
+  pinMode(POL,INPUT);
+
+  pinMode(INT,INPUT);
+
+  pinMode(LED,OUTPUT);
+  digitalWrite(LED,LOW);  
 
   Serial.begin(9600);
   Serial.println("hello.");
 
   isrflag = false;
 
-  attachInterrupt(0,myISR,FALLING);
+  attachInterrupt(1,myISR,FALLING);
 }
 
 void loop()
@@ -46,6 +73,9 @@ void loop()
   if (isrflag)
   {
     isrflag = false;
+    digitalWrite(LED,HIGH);
+    delay(100);
+    digitalWrite(LED,LOW);
     Serial.print("mah: ");
     Serial.print(charge);
     Serial.print(" soc: ");
@@ -63,9 +93,9 @@ void myISR()
 {
   static boolean polarity;
   
-  isrflag = true;
   polarity = digitalRead(4);
   time = micros();
+  isrflag = true;
   if (polarity)
   {
     percent += ah_quanta;
