@@ -7845,7 +7845,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <sheet>
 <plain>
 <text x="172.72" y="7.62" size="2.54" layer="94">M Grusin</text>
-<text x="238.76" y="7.62" size="2.54" layer="94">03</text>
+<text x="238.76" y="7.62" size="2.54" layer="94">10</text>
 <text x="165.1" y="66.04" size="1.778" layer="97">CLOSE SJ3 AND SJ4 FOR 3.3V VIO</text>
 <text x="165.1" y="81.28" size="1.778" layer="97">OPEN SJ1 TO USE !SHDN! INPUT</text>
 <text x="45.72" y="149.86" size="1.778" layer="97">CURRENT SENSE TERMINALS:</text>
