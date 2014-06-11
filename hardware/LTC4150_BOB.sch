@@ -7834,34 +7834,31 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="LOGO3" library="SparkFun-Aesthetics" deviceset="LOGO-SFE" device="SK"/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="OSHW-LOGO" device="S"/>
-<part name="SJ3" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO" value=""/>
-<part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NC" value=""/>
+<part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO" value=""/>
 <part name="LOGO2" library="SparkFun-Aesthetics" deviceset="LOGO-SFE" device="NW2"/>
-<part name="SJ2" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NC" value=""/>
+<part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NC" value=""/>
 <part name="R2" library="SparkFun-Passives" deviceset="RESISTOR" device="AXIAL-0.3" value="DNP"/>
-<part name="SJ4" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO" value=""/>
+<part name="SJ3" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NO" value=""/>
+<part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0603-RES" value="3.3K"/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 <text x="172.72" y="7.62" size="2.54" layer="94">M Grusin</text>
 <text x="238.76" y="7.62" size="2.54" layer="94">10</text>
-<text x="165.1" y="66.04" size="1.778" layer="97">CLOSE SJ3 AND SJ4 FOR 3.3V VIO</text>
-<text x="165.1" y="81.28" size="1.778" layer="97">OPEN SJ1 TO USE !SHDN! INPUT</text>
+<text x="165.1" y="73.66" size="1.778" layer="97">CLOSE SJ2 AND SJ3 FOR 3.3V VIO</text>
 <text x="45.72" y="149.86" size="1.778" layer="97">CURRENT SENSE TERMINALS:</text>
-<text x="165.1" y="63.5" size="1.778" layer="97">LEAVE BOTH OPEN FOR 5V VIO</text>
+<text x="165.1" y="71.12" size="1.778" layer="97">LEAVE BOTH OPEN FOR 5V VIO</text>
 <text x="165.1" y="142.24" size="1.778" layer="97">AT 1A (MAX), !INT! WILL PULSE AT</text>
 <text x="165.1" y="139.7" size="1.778" layer="97">1.6275 Hz = 0.6144 S</text>
 <text x="165.1" y="149.86" size="1.778" layer="97">1 !INT! = 0.0001707 Ah</text>
 <text x="165.1" y="147.32" size="1.778" layer="97">5859 !INT!S = 1 Ah</text>
-<text x="165.1" y="73.66" size="1.778" layer="97">OPEN SJ2 TO USE !CLR! INPUT</text>
+<text x="165.1" y="81.28" size="1.778" layer="97">OPEN SJ1 TO USE !CLR! INPUT</text>
 <rectangle x1="149.098" y1="108.712" x2="150.622" y2="109.728" layer="94"/>
-<rectangle x1="167.132" y1="118.364" x2="168.148" y2="120.142" layer="94"/>
 <text x="45.72" y="142.24" size="1.778" layer="97">1.0A MAX (FOR 0.05 OHM SENSE RESISTOR)</text>
 <text x="190.5" y="127" size="1.778" layer="97">VIO: 3.3V OR 5V</text>
-<text x="190.5" y="124.46" size="1.778" layer="97">(SEE SJ3 AND SJ4)</text>
-<text x="165.1" y="78.74" size="1.778" layer="97">LEAVE CLOSED TO KEEP BOARD ENABLED</text>
-<text x="165.1" y="71.12" size="1.778" layer="97">LEAVE CLOSED FOR AUTOMATIC CLEAR</text>
+<text x="190.5" y="124.46" size="1.778" layer="97">(SEE SJ2 AND SJ3)</text>
+<text x="165.1" y="78.74" size="1.778" layer="97">LEAVE CLOSED FOR AUTOMATIC CLEAR</text>
 <text x="45.72" y="144.78" size="1.778" layer="97">8.5V MAX</text>
 <text x="45.72" y="137.16" size="1.778" layer="97">POL SIGNAL:</text>
 <text x="66.04" y="137.16" size="1.778" layer="97">H</text>
@@ -7897,23 +7894,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="GND6" gate="1" x="193.04" y="96.52"/>
 <instance part="LOGO3" gate="G$1" x="139.7" y="2.54"/>
 <instance part="LOGO1" gate="G$1" x="121.92" y="12.7"/>
-<instance part="SJ3" gate="1" x="137.16" y="91.44" smashed="yes" rot="MR180">
+<instance part="SJ2" gate="1" x="137.16" y="91.44" smashed="yes" rot="MR180">
 <attribute name="NAME" x="133.35" y="89.662" size="1.778" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="134.62" y="96.52" size="1.778" layer="96" rot="MR180"/>
 </instance>
-<instance part="SJ1" gate="1" x="167.64" y="119.38" smashed="yes" rot="MR270">
-<attribute name="NAME" x="165.862" y="115.57" size="1.778" layer="95" rot="R90"/>
-</instance>
 <instance part="LOGO2" gate="G$1" x="139.7" y="10.16"/>
-<instance part="SJ2" gate="1" x="149.86" y="109.22" smashed="yes" rot="MR180">
-<attribute name="NAME" x="146.05" y="112.522" size="1.778" layer="95" rot="MR180"/>
+<instance part="SJ1" gate="1" x="149.86" y="109.22" smashed="yes" rot="MR180">
+<attribute name="NAME" x="144.78" y="114.046" size="1.778" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="147.32" y="114.3" size="1.778" layer="96" rot="MR180"/>
 </instance>
 <instance part="R2" gate="G$1" x="71.12" y="114.3"/>
-<instance part="SJ4" gate="1" x="157.48" y="91.44" smashed="yes" rot="MR180">
+<instance part="SJ3" gate="1" x="157.48" y="91.44" smashed="yes" rot="MR180">
 <attribute name="NAME" x="153.67" y="89.662" size="1.778" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="154.94" y="96.52" size="1.778" layer="96" rot="MR180"/>
 </instance>
+<instance part="R9" gate="G$1" x="167.64" y="119.38" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -7961,7 +7956,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="152.4" y1="114.3" x2="152.4" y2="111.76" width="0.1524" layer="91"/>
 <junction x="152.4" y="111.76"/>
 <label x="172.72" y="111.76" size="1.27" layer="95" xref="yes"/>
-<pinref part="SJ2" gate="1" pin="2"/>
+<pinref part="SJ1" gate="1" pin="2"/>
 <wire x1="154.94" y1="109.22" x2="154.94" y2="111.76" width="0.1524" layer="91"/>
 <junction x="154.94" y="111.76"/>
 </segment>
@@ -7995,7 +7990,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="152.4" y1="96.52" x2="129.54" y2="96.52" width="0.1524" layer="91"/>
 <junction x="152.4" y="96.52"/>
 <pinref part="R8" gate="G$1" pin="1"/>
-<pinref part="SJ4" gate="1" pin="1"/>
+<pinref part="SJ3" gate="1" pin="1"/>
 <wire x1="152.4" y1="88.9" x2="152.4" y2="91.44" width="0.1524" layer="91"/>
 <junction x="152.4" y="91.44"/>
 </segment>
@@ -8005,13 +8000,13 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="R8" gate="G$1" pin="2"/>
 <wire x1="162.56" y1="96.52" x2="167.64" y2="96.52" width="0.1524" layer="91"/>
 <label x="172.72" y="96.52" size="1.27" layer="95" xref="yes"/>
-<pinref part="SJ1" gate="1" pin="2"/>
 <wire x1="167.64" y1="96.52" x2="172.72" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="167.64" y1="114.3" x2="167.64" y2="96.52" width="0.1524" layer="91"/>
 <junction x="167.64" y="96.52"/>
-<pinref part="SJ4" gate="1" pin="2"/>
+<pinref part="SJ3" gate="1" pin="2"/>
 <wire x1="162.56" y1="91.44" x2="162.56" y2="96.52" width="0.1524" layer="91"/>
 <junction x="162.56" y="96.52"/>
+<pinref part="R9" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="JP4" gate="G$1" pin="6"/>
@@ -8094,9 +8089,9 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <wire x1="160.02" y1="124.46" x2="160.02" y2="127" width="0.1524" layer="91"/>
 <junction x="160.02" y="127"/>
 <label x="172.72" y="127" size="1.27" layer="95" xref="yes"/>
-<pinref part="SJ1" gate="1" pin="1"/>
 <wire x1="167.64" y1="124.46" x2="167.64" y2="127" width="0.1524" layer="91"/>
 <junction x="167.64" y="127"/>
+<pinref part="R9" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <wire x1="195.58" y1="114.3" x2="193.04" y2="114.3" width="0.1524" layer="91"/>
@@ -8108,10 +8103,10 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="!CLR!" class="0">
 <segment>
-<pinref part="SJ3" gate="1" pin="2"/>
+<pinref part="SJ2" gate="1" pin="2"/>
 <pinref part="R4" gate="G$1" pin="2"/>
 <junction x="142.24" y="106.68"/>
-<pinref part="SJ2" gate="1" pin="1"/>
+<pinref part="SJ1" gate="1" pin="1"/>
 <wire x1="142.24" y1="106.68" x2="142.24" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="106.68" x2="144.78" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="144.78" y1="106.68" x2="172.72" y2="106.68" width="0.1524" layer="91"/>
@@ -8128,7 +8123,7 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <net name="N$1" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
-<pinref part="SJ3" gate="1" pin="1"/>
+<pinref part="SJ2" gate="1" pin="1"/>
 <wire x1="132.08" y1="88.9" x2="132.08" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="132.08" y1="91.44" x2="132.08" y2="106.68" width="0.1524" layer="91"/>
