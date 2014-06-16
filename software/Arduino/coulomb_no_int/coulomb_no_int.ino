@@ -7,50 +7,53 @@ board to implement a battery "gas gauge" without using interrupts.
 Product page: https://www.sparkfun.com/products/12052
 Software repository: https://github.com/sparkfun/LTC4150_Coulomb_Counter_BOB
 
+HOW IT WORKS:
+
 Battery capacity is measured in amp-hours (Ah). For example, a one
 amp-hour battery can provide 1 amp of current for one hour, or 2 amps
-for half an hour, or half an amp for two hours, etc. 
+for half an hour, or half an amp for two hours, etc.
 
 The LTC4150 monitors current passing into or out of a battery.
 It has an output called INT (interrupt) that will pulse low every
-time 0.0001707 amp-hours passes through the part, or to put it
+time 0.0001707 amp-hours passes through the part. Or to put it
 another way, the INT signal will pulse 5859 times for one amp-hour.
 
 If you hook up a full 1Ah (1000mAh) battery to the LTC4150, you
-can expect to get 5859 pulses before it's depleted. You can
-accurately determine the percentage of battery capacity remaining
-using this technique.
+can expect to get 5859 pulses before it's depleted. If you keep track
+of these pulses, you can accurately determine the remaining battery
+capacity.
+
+There is also a POL (polarity) signal coming out of the LTC4150.
+When you detect a pulse, you can check the POL signal to see whether
+current is moving into or out of the battery. If POL is low, current is
+coming out of the battery (discharging). If POL is high, current is
+going into the battery (charging).
+
+(Note that because of chemical inefficiencies, it takes a bit more current
+to charge a battery than you will eventually get out of it. This sketch
+does not take this into account. For better accuracy you might provide
+a method to "zero" a full battery, either automatically or manually.)
 
 Although it isn't the primary function of the part, you can also
 measure the time between pulses to calculate current draw. At 1A
 (the maximum allowed), INT will pulse every 0.6144 seconds, or
-1.6275 Hz. (Note that for low currents, pulses will be many seconds
-apart.)
+1.6275 Hz. Note that for low currents, pulses will be many seconds
+apart, so don't expect frequent updates.
 
-When you detect a pulse, you can check the POL (polarity) signal
-to see whether current is moving into or out of the battery. If
-POL is low, current is coming out of the battery (discharging).
-If POL is high, current is going into the battery (charging).
-You can keep a running total of amp-hours going into and out of
-the battery to estimate the state-of-charge. (Note that because
-of chemical inefficiencies, not all of the current used to charge
-a battery will actually end up as capacity - some ends up as heat.
-You should provide a method to "zero" a full battery.)
-
-There are two methods you can use to monitor INT pulses. You can use
-an interrupt to monitor the INT signal in the background, or you can
-monitor the INT line yourself and use the CLR signal to reset the
-LTC4150 for the next pulse. 
+There are two methods you can use to keep track of the INT pulses. You
+can use an interrupt input to monitor the INT signal in the background,
+or you can monitor the INT line yourself and use the CLR signal to reset
+the LTC4150 for the next pulse.
 
 ** This sketch shows how to operate the LTC4150 without interrupts **
 
-Hardware connections:
+HARDWARE CONNECTIONS:
 
 Before connecting this board to your Arduino, double check that
-all four solder jumpers are set appropriately.
+all three solder jumpers are set appropriately.
 
-For this sketch, unsolder SJ1 (opened).
-This disconnects INT and CLR to allow you to use CLR manually.
+For this sketch, unsolder (open) SJ1.
+This disconnects INT and CLR to allow you to use the CLR signal manually.
 
 If you're using a 5V Arduino, leave both SJ2 and SJ3 open (unsoldered).
 
@@ -68,25 +71,25 @@ Note that if you solder headers to the bottom of the board,
 you can plug the breakout board directly into Arduino header
 pins D2 (VIO) through D7 (SHDN).
 
-Running the sketch:
+RUNNING THE SKETCH:
 
 This sketch monitors current moving into and out of a battery.
 Whenever it detects a low INT signal from the LTC4150, it will
-clear INT by making the CLR pin low, and provide an update of the
-battery state of charge (how full the battery is), current draw, etc.
+clear INT by making the CLR pin low, update the battery state-
+of-charge (how full the battery is), current draw, etc.
 
 The sketch is hardcoded for a 2000mAh battery that is 100% full
 when the sketch starts. You can easily change this by editing
 the following lines:
 
-volatile double battery_mAh = 2000.0; // milliamp-hours (mAh)
-volatile double battery_percent = 100.0;  // state-of-charge (percent)
+  double battery_mAh = 2000.0; // milliamp-hours (mAh)
+  double battery_percent = 100.0;  // state-of-charge (percent)
 
 After uploading the sketch, open the Serial Monitor and set the
 baud rate to 9600. Whenever the sketch detects an INT pulse, it
 will update its calculations and print them out.
 
-License:
+LICENSE:
 
 Our example code uses the "beerware" license. You can do anything
 you like with this code. No really, anything. If you find it useful
@@ -97,22 +100,28 @@ Have fun! -Your friends at SparkFun.
 
 // For this sketch you only need the first five of the 
 // following pins, but you can plug the board directly
-// into the Arduino header (D2-D7) for convenience:
+// into the Arduino header (D2-D7) for convenience.
 
-#define VIO 2
+// (If you are not plugging the board directly into the
+// header, you can remove all references to VIO, GND,
+// and SHDN.)
+
+#define VIO 2 // Just used for the HIGH reference voltage
 #define INT 3
 #define POL 4
-#define GND 5
+#define GND 5 // Just used for the LOW reference voltage
 #define CLR 6
-#define SHDN 7 // Unneeded in this sketch
+#define SHDN 7 // Unneeded in this sketch, set to input
 
 #define LED 13 // Standard Arduino LED
 
 // Change the following two lines to match your battery
-// and it's initial state-of-charge:
+// and its initial state-of-charge:
 
 double battery_mAh = 2000.0; // milliamp-hours (mAh)
 double battery_percent = 100.0;  // state-of-charge (percent)
+
+// Global variables:
 
 double ah_quanta = 0.17067759; // mAh for each INT
 double percent_quanta; // calculate below
@@ -134,7 +143,7 @@ void setup()
   pinMode(CLR,OUTPUT);
   digitalWrite(CLR,HIGH);
   
-  pinMode(SHDN,INPUT); // Unneeded, disabled
+  pinMode(SHDN,INPUT); // Unneeded, disabled by setting to input
 
   pinMode(LED,OUTPUT);
   digitalWrite(LED,LOW);  
@@ -155,24 +164,13 @@ void loop()
   double mA;
   boolean polarity;
 
-  if (digitalRead(INT)==0) // received a tick
+  if (digitalRead(INT)==0) // INT has gone low
   {
     // Determine delay since last interrupt (for mA calculation)
+    // Note that first interrupt will be incorrect (no previous time!)
 
     lasttime = time;
     time = micros();
-
-    // Clear the interrput signal
-
-    digitalWrite(CLR,LOW);
-    delay(1);
-    digitalWrite(CLR,HIGH);
-
-    // Blink the LED (optional)
-    
-    digitalWrite(LED,HIGH);
-    delay(100);
-    digitalWrite(LED,LOW);
 
     // Get the polarity value
     
@@ -195,6 +193,18 @@ void loop()
     // If charging, we'll set mA negative (optional)
     
     if (polarity) mA = mA * -1.0;
+
+    // Clear the interrupt signal
+
+    digitalWrite(CLR,LOW);
+    delayMicroseconds(40); // CLR needs to be low > 20us
+    digitalWrite(CLR,HIGH);
+
+    // Blink the LED (optional)
+    
+    digitalWrite(LED,HIGH);
+    delay(100);
+    digitalWrite(LED,LOW);
 
     // Print out the current battery status
 
