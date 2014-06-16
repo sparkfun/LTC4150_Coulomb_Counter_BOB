@@ -1,109 +1,238 @@
-/*
+/* LTC4150 Coulomb Counter interrupt example code
+Mike Grusin, SparkFun Electronics
+
+This sketch shows how to use the LTC4150 Coulomb Counter breakout
+board along with interrupts to implement a battery "gas gauge."
+
+Product page: https://www.sparkfun.com/products/12052
+Software repository: https://github.com/sparkfun/LTC4150_Coulomb_Counter_BOB
+
+Battery capacity is measured in amp-hours (Ah). For example, a one
+amp-hour battery can provide 1 amp of current for one hour, or 2 amps
+for half an hour, or half an amp for two hours, etc. 
+
+The LTC4150 monitors current passing into or out of a battery.
+It has an output called INT (interrupt) that will pulse low every
+time 0.0001707 amp-hours passes through the part, or to put it
+another way, the INT signal will pulse 5859 times for one amp-hour.
+
+If you hook up a full 1Ah (1000mAh) battery to the LTC4150, you
+can expect to get 5859 pulses before it's depleted. You can
+accurately determine the percentage of battery capacity remaining
+using this technique.
+
+Although it isn't the primary function of the part, you can also
+measure the time between pulses to calculate current draw. At 1A
+(the maximum allowed), INT will pulse every 0.6144 seconds, or
+1.6275 Hz. (Note that for low currents, pulses will be many seconds
+apart.)
+
+When you detect a pulse, you can check the POL (polarity) signal
+to see whether current is moving into or out of the battery. If
+POL is low, current is coming out of the battery (discharging).
+If POL is high, current is going into the battery (charging).
+You can keep a running total of amp-hours going into and out of
+the battery to estimate the state-of-charge. (Note that because
+of chemical inefficiencies, not all of the current used to charge
+a battery will actually end up as capacity - some ends up as heat.
+You should provide a method to "zero" a full battery.)
+
+There are two methods you can use to monitor INT pulses. You can use
+an interrupt to monitor the INT signal in the background, or you can
+monitor the INT line yourself and use the CLR signal to reset the
+LTC4150 for the next pulse. 
+
+** This sketch shows how to use interrupts with the LTC4150. **
+
+Hardware connections:
+
 Before connecting this board to your Arduino, double check that
-the four solder jumpers are set appropriately.
+all four solder jumpers are set appropriately.
 
-SJ1 / SJ2 (top of board):
+For this sketch, leave SJ1 closed (soldered).
+This connects INT and CLR to clear interrupts automatically.
 
-For this sketch, leave SJ1 and SJ2 closed (soldered).
-This enables the board and clears interrupts automatically.
+If you're using a 5V Arduino, leave both SJ2 and SJ3 open (unsoldered).
 
-SJ3 / SJ4 (bottom of board):
+If you're using a 3.3V Arduino, close (solder) both SJ2 and SJ3.
 
-Leave both SJ3 and SJ4 open (unsoldered) for 5V Arduinos.
-Close (solder) both SJ3 and SJ4 for 3.3V Arduinos.
+Connect the following pins to your Arduino:
 
 VIO to VCC
 GND to GND
-INT to 3
-POL to 4
+INT to D3
+POL to D4
 
+Note that if you solder headers to the bottom of the board,
+you can plug the breakout board directly into Arduino header
+pins D2 (VIO) through D7 (SHDN).
+
+Running the sketch:
+
+This sketch monitors current moving into and out of a battery.
+Whenever it detects a pulse from the LTC4150, it will provide 
+an update of the battery state of charge (how full the battery
+is), current draw, etc.
+
+The sketch is hardcoded for a 2000mAh battery that is 100% full
+when the sketch starts. You can easily change this by editing
+the following lines:
+
+volatile double battery_mAh = 2000.0; // milliamp-hours (mAh)
+volatile double battery_percent = 100.0;  // state-of-charge (percent)
+
+After uploading the sketch, open the Serial Monitor and set the
+baud rate to 9600. Whenever the sketch detects an INT pulse, it
+will update its calculations and print them out.
+
+License:
+
+Our example code uses the "beerware" license. You can do anything
+you like with this code. No really, anything. If you find it useful
+and you meet one of us in person someday, consider buying us a beer.
+
+Have fun! -Your friends at SparkFun.
 */
+
+// For this sketch you only need the first four of the 
+// following pins, but you can plug the board directly
+// into the Arduino header (D2-D7) for convenience:
 
 #define VIO 2
 #define INT 3 // On Uno and Pro, pins 2 and 3 support interrupts
 #define POL 4
 #define GND 5
-#define CLR 6
-#define SHDN 7
+#define CLR 6 // Unneeded in this sketch
+#define SHDN 7 // Unneeded in this sketch
 
-#define LED 13
+#define LED 13 // Standard Arduino LED
 
-volatile boolean isrflag = false;
+// Change the following two lines to match your battery
+// and it's initial state-of-charge:
+
+volatile double battery_mAh = 2000.0; // milliamp-hours (mAh)
+volatile double battery_percent = 100.0;  // state-of-charge (percent)
+
+// Global variables ("volatile" means the interrupt can
+// change them behind the scenes):
+
+volatile boolean isrflag;
 volatile long int time, lasttime;
-
-volatile double percent = 100.0;
-volatile double charge = 2000.0;
-
-#define ah_quanta 0.0001707
-#define percent_quanta 0.00853388
+volatile double mA;
+double ah_quanta = 0.17067759; // mAh for each INT
+double percent_quanta; // calculate below
 
 void setup()
 {
+  // Set up I/O pins:
+  
   pinMode(GND,OUTPUT);
   digitalWrite(GND,LOW);
 
   pinMode(VIO,OUTPUT);
   digitalWrite(VIO,HIGH);
 
-  pinMode(SHDN,OUTPUT);
-  digitalWrite(SHDN,HIGH);
-
-  pinMode(CLR,OUTPUT);
-  digitalWrite(CLR,HIGH);
+  pinMode(INT,INPUT);
 
   pinMode(POL,INPUT);
 
-  pinMode(INT,INPUT);
+  pinMode(CLR,INPUT); // Unneeded, disabled
+  
+  pinMode(SHDN,INPUT); // Unneeded, disabled
 
   pinMode(LED,OUTPUT);
   digitalWrite(LED,LOW);  
 
+  // Enable serial output:
+
   Serial.begin(9600);
-  Serial.println("hello.");
+  Serial.println("LTC4150 Coulomb Counter BOB interrupt example");
 
+  // One INT is this many percent of battery capacity:
+  
+  percent_quanta = 1.0/(battery_mAh/1000.0*5859.0/100.0);
+
+  // Enable active-low interrupts on D3 (INT1) to function myISR():
+  
   isrflag = false;
-
   attachInterrupt(1,myISR,FALLING);
 }
 
 void loop()
 {
   static int n = 0;
-  
+
+  // When we detect an INT signal, the myISR() function
+  // will automatically run. myISR() sets isrflag to TRUE
+  // so that we know that something happened.
+
   if (isrflag)
   {
+    // Reset the flag to false so we only do this once per INT
+    
     isrflag = false;
+
+    // Blink the LED
+
     digitalWrite(LED,HIGH);
     delay(100);
     digitalWrite(LED,LOW);
-    Serial.print("mah: ");
-    Serial.print(charge);
+
+    // Print out current status (variables set by myISR())
+
+    Serial.print("mAh: ");
+    Serial.print(battery_mAh);
     Serial.print(" soc: ");
-    Serial.print(percent);
+    Serial.print(battery_percent);
     Serial.print("% time: ");
     Serial.print((time-lasttime)/1000000.0);
-    Serial.print("s ma: ");
-    Serial.println(614.4/((time-lasttime)/1000000.0));
-    lasttime = time;
+    Serial.print("s mA: ");
+    Serial.println(mA);
   }
-//  delay(500);
+
+  // You can run your own code in the main loop()
+  // myISR() will automatically update information
+  // as it needs to, and set isrflag to let you know
+  // that something has changed.
 }
 
-void myISR()
+void myISR() // Run automatically for low signal on D3 (INT1)
 {
   static boolean polarity;
   
-  polarity = digitalRead(4);
+  // Determine delay since last interrupt (for mA calculation)
+
+  lasttime = time;
   time = micros();
-  isrflag = true;
-  if (polarity)
+
+  // Discard initial powerup interrupt
+
+  if ((time-lasttime) > 10000)
   {
-    percent += ah_quanta;
-    charge += percent_quanta;
-  }
-  else
-  {
-    percent -= ah_quanta;
-    charge -= percent_quanta;
+    // Get polarity value 
+
+    polarity = digitalRead(POL);
+    if (polarity) // high = charging
+    {
+      battery_mAh += ah_quanta;
+      battery_percent += percent_quanta;
+    }
+    else // low = discharging
+    {
+      battery_mAh -= ah_quanta;
+      battery_percent -= percent_quanta;
+    }
+
+    // Calculate mA from time delay (optional)
+  
+    mA = 614.4/((time-lasttime)/1000000.0);
+  
+    // If charging, we'll set mA negative (optional)
+    
+    if (polarity) mA = mA * -1.0;
+    
+    // Set isrflag so main loop knows an interrupt occurred
+    
+    isrflag = true;
   }
 }
