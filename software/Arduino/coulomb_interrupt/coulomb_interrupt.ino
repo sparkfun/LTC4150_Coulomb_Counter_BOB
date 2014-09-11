@@ -50,7 +50,7 @@ the LTC4150 for the next pulse.
 HARDWARE CONNECTIONS:
 
 Before connecting this board to your Arduino, double check that
-all three solder jumpers are set appropriately.
+all three solder jumpers are set appropriately:
 
 For this sketch, leave SJ1 soldered (closed).
 This connects INT and CLR to clear interrupts automatically.
@@ -66,9 +66,9 @@ GND to GND
 INT to D3
 POL to D4
 
-Note that if you solder headers to the bottom of the board,
-you can plug the breakout board directly into Arduino header
-pins D2 (VIO) through D7 (SHDN).
+Note that if you solder headers to the bottom of the breakout board,
+you can plug it directly into Arduino header pins D2 (VIO) through
+D7 (SHDN).
 
 RUNNING THE SKETCH:
 
@@ -79,7 +79,7 @@ current draw, etc.
 
 The sketch is hardcoded for a 2000mAh battery that is 100% full
 when the sketch starts. You can easily change this by editing
-the following lines:
+line 120 and 121:
 
   volatile double battery_mAh = 2000.0; // milliamp-hours (mAh)
   volatile double battery_percent = 100.0;  // state-of-charge (percent)
@@ -97,8 +97,8 @@ and you meet one of us in person someday, consider buying us a beer.
 Have fun! -Your friends at SparkFun.
 */
 
-// For this sketch you only need the first four of the 
-// following pins, but you can plug the board directly
+// For this sketch you only need D3 and D4,
+// but you can plug the board directly
 // into the Arduino header (D2-D7) for convenience.
 
 // (If you are not plugging the board directly into the
@@ -106,11 +106,11 @@ Have fun! -Your friends at SparkFun.
 // CLR and SHDN.)
 
 #define VIO 2 // Just used for the HIGH reference voltage
-#define INT 3 // On 328 Arduinos, pins 2 and 3 support interrupts
-#define POL 4
+#define INT 3 // On 328 Arduinos, only pins 2 and 3 support interrupts
+#define POL 4 // Polarity signal
 #define GND 5 // Just used for the LOW reference voltage
-#define CLR 6 // Unneeded in this sketch, set to input
-#define SHDN 7 // Unneeded in this sketch, set to input
+#define CLR 6 // Unneeded in this sketch, set to input (hi-Z)
+#define SHDN 7 // Unneeded in this sketch, set to input (hi-Z)
 
 #define LED 13 // Standard Arduino LED
 
@@ -133,21 +133,21 @@ void setup()
 {
   // Set up I/O pins:
   
-  pinMode(GND,OUTPUT);
+  pinMode(GND,OUTPUT); // Make this pin LOW for "ground"
   digitalWrite(GND,LOW);
 
-  pinMode(VIO,OUTPUT);
+  pinMode(VIO,OUTPUT); // Make this pin HIGH for logic reference
   digitalWrite(VIO,HIGH);
 
-  pinMode(INT,INPUT);
+  pinMode(INT,INPUT); // Interrupt input pin (must be D2 or D3)
 
-  pinMode(POL,INPUT);
+  pinMode(POL,INPUT); // Polarity input pin
 
   pinMode(CLR,INPUT); // Unneeded, disabled by setting to input
   
   pinMode(SHDN,INPUT); // Unneeded, disabled by setting to input
 
-  pinMode(LED,OUTPUT);
+  pinMode(LED,OUTPUT); // Standard Arduino status LED
   digitalWrite(LED,LOW);  
 
   // Enable serial output:
@@ -204,7 +204,7 @@ void loop()
   // that something has changed.
 }
 
-void myISR() // Run automatically for low signal on D3 (INT1)
+void myISR() // Run automatically for falling edge on D3 (INT1)
 {
   static boolean polarity;
   
