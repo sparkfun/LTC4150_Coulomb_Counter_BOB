@@ -3,9 +3,16 @@ Mike Grusin, SparkFun Electronics
 
 This sketch uses the LTC4150 Coulomb Counter breakout
 board to implement a battery "gas gauge" on a SparkFun
-7-segment serial display.
+7-segment serial display. (We tried it on the OpenSegment Shield
+but it should work on any similar display.) It will display the
+percentage left on a battery based on how much power you're
+pulling out of it.
 
-HARDWARE CONNECTIONS:
+The sketch assumes that you are starting with a full battery,
+NOTE that you should change line 85 to enter the capacity
+of the battery you are using.
+
+COULOMB COUNTER HARDWARE CONNECTIONS:
 
 Before connecting the Coulomb Counter to your Arduino, double
 check that all three solder jumpers are set appropriately:
@@ -17,16 +24,24 @@ If you're using a 5V Arduino, leave both SJ2 and SJ3 open (unsoldered).
 
 If you're using a 3.3V Arduino, close (solder) both SJ2 and SJ3.
 
-Connect the following pins to your Arduino:
+Connect the following Coulomb Counter pins to your Arduino:
 
 VIO to VCC
 GND to GND
 INT to D3
 POL to D4
 
-Note that if you solder headers to the bottom of the breakout board,
-you can plug it directly into Arduino header pins D2 (VIO) through
-D7 (SHDN).
+Note that if you solder headers to the breakout board,
+you can plug it directly into Arduino header pins
+D2 (VIO) through D7 (SHDN).
+
+7-SEGMENT HARDWARE CONNECTIONS:
+
+Connect the following serial 7-segment display pins to your Arduino:
+
+VCC to VCC
+GND to GND
+RXI to D8
 
 LICENSE:
 
@@ -37,11 +52,16 @@ and you meet one of us in person someday, consider buying us a beer.
 Have fun! -Your friends at SparkFun.
 */
 
-#include <SoftwareSerial.h>
+// We'll use the SoftwareSerial library to talk to the serial
+// 7-segment display. TX on pin 8 is compatible with the 
+// 7 Segment Shield.
 
+#include <SoftwareSerial.h>
 SoftwareSerial Serial7Segment(7, 8); // RX pin, TX pin
 
-// For this sketch you only need D3 and D4,
+// I/O pin definitions
+
+// For this sketch we only need D3 and D4,
 // but you can plug the board directly
 // into the Arduino header (D2-D7) for convenience.
 
@@ -56,12 +76,13 @@ SoftwareSerial Serial7Segment(7, 8); // RX pin, TX pin
 #define CLR 6 // Unneeded in this sketch, set to input (hi-Z)
 #define SHDN 7 // Unneeded in this sketch, set to input (hi-Z)
 
-#define LED 13 // Standard Arduino LED
+#define LED 13 // Standard Arduino LED (optional)
+#define BUZZ 11 // Buzzer on pin 11 (optional)
 
-// Change the following two lines to match your battery
+// Change the following two lines to match YOUR battery
 // and its initial state-of-charge:
 
-volatile double battery_mAh = 2000.0; // milliamp-hours (mAh)
+volatile double battery_mAh = 110.0; // milliamp-hours (mAh)
 volatile double battery_percent = 100.0;  // state-of-charge (percent)
 
 // Global variables ("volatile" means the interrupt can
@@ -91,21 +112,16 @@ void setup()
   
   pinMode(SHDN,INPUT); // Unneeded, disabled by setting to input
 
-  pinMode(LED,OUTPUT); // Standard Arduino status LED
-  digitalWrite(LED,LOW);  
+  pinMode(LED,OUTPUT); // LED (optional)
+  digitalWrite(LED,LOW);
 
-  // Enable serial output:
-
-  Serial.begin(9600);
-  Serial.println("LTC4150 Coulomb Counter BOB interrupt example");
+  pinMode(BUZZ,OUTPUT); // Buzzer (optional)
+  digitalWrite(BUZZ,LOW);
 
   // Set up serial 7-segment display
 
   Serial7Segment.begin(9600); // 9600 bps, TX on pin 8
   Serial7Segment.write('v');  // Reset the display
-
-  Serial7Segment.write(0x77); // Turn on the middle decimal point
-  Serial7Segment.write(0x02);
 
   // One INT is this many percent of battery capacity:
   
@@ -120,46 +136,35 @@ void setup()
 
 void loop()
 {
-  char tempString[10]; // Used for sprintf
-  static int n = 0;
-
-  // When we detect an INT signal, the myISR() function
-  // will automatically run. myISR() sets isrflag to TRUE
-  // so that we know that something happened.
+  // If an interrupt occurs (tick from the Coulomb Counter),
+  // it will set isrflag to true to let us know that something
+  // changed.
 
   if (isrflag)
   {
-    // Reset the flag to false so we only do this once per INT
-    
+    // Clear the flag (so we only run this once per int)
     isrflag = false;
+    
+    // Send the updated percent value to 7-segment display
+    print7SegFloat(battery_percent);
 
-    // Blink the LED
-
+    // Blink LED and buzzer (optional)
     digitalWrite(LED,HIGH);
+    tone(BUZZ,2000);
+
     delay(100);
+
     digitalWrite(LED,LOW);
-
-    // Print out current status (variables set by myISR())
-
-//    Serial.print("mAh: ");
-//    Serial.print(battery_mAh);
-//    Serial.print(" soc: ");
-//    Serial.print(battery_percent);
-//    Serial.print("% time: ");
-//    Serial.print((time-lasttime)/1000000.0);
-//    Serial.print("s mA: ");
-//    Serial.println(mA);
-    Serial7Segment.write(0x79); // Cursor to left
-    Serial7Segment.write((byte)0);
-//    Serial7Segment.write(0x77); // Turn on the middle decimal point
-//    Serial7Segment.write(0x02);
-    sprintf(tempString, "%4d", int(battery_percent*100.0)); //Convert deciSecond into a string that is right adjusted
-    Serial7Segment.print(tempString); //Send serial string out the soft serial port to the S7S
+    noTone(BUZZ);
   }
   
+  // You can put anything else you want in the main loop,
+  // just be sure you check for isrflag at least every
+  // half-second (which is the highest frequency you'll see
+  // at the 1A maximum current through the Coulomb Counter).
 }
 
-void myISR() // Run automatically for falling edge on D3 (INT1)
+void myISR()// Run automatically for falling edge on D3 (INT1)
 {
   static boolean polarity;
   
@@ -195,3 +200,56 @@ void myISR() // Run automatically for falling edge on D3 (INT1)
   
   isrflag = true;
 }
+
+void print7SegFloat(double val) // Display a floating point value
+// Send a floating-point value to a 7-segment display
+// Properly handle 4 significant digits with up to 2 decimal points
+// and negative numbers including minus sign
+{
+  char tempstring[6];
+
+  // Convert number to string with two decimal points
+  // ("100.00" -> "10000")
+  sprintf(tempstring,"%4ld",long(val*100.0));
+
+  // Truncate to leftmost 4 characters
+  tempstring[4] = 0;
+
+  // Move cursor to leftmost position
+  // (Prevents sync problems if you don't send 4 chars to display)
+  Serial7Segment.write(0x79);
+  Serial7Segment.write((byte)0);
+
+  // Handle overflow condition if > 4 significant digits
+  if (val > 9999.0 || val < -999.0)
+  {
+    Serial7Segment.print(" OF "); // Display "OF" for overflow
+    Serial7Segment.write(0x77); // Turn off decimal point
+    Serial7Segment.write((byte)0);
+  }
+  else
+    // Send 4-character string to display
+    Serial7Segment.print(tempstring); // Send string out the softserial port
+
+  // Set correct decimal point: two decimal places
+  if ((val >= 0 && val < 100.0) || (val < 0 && val > -10.0))
+  {
+    Serial7Segment.write(0x77);
+    Serial7Segment.write((byte)2); // 2nd digit
+    return;
+  }
+
+  // One decimal place:
+  if ((val >= 0 && val < 1000.0) || (val < 0 && val > -100.0))
+  {
+    Serial7Segment.write(0x77);
+    Serial7Segment.write((byte)4); // 3rd digit
+    return;
+  }
+
+  // No decimal places:
+  Serial7Segment.write(0x77); // Turn off decimal point
+  Serial7Segment.write((byte)0);
+  return;
+}
+
