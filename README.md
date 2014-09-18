@@ -22,19 +22,19 @@ The Coulomb Counter can accommodate power supplies up to 8.5V and up to 1A.
 
 * Configure the jumpers:
 
-** If you're connecting the Coulomb Counter to a 5V system, leave solder jumpers SJ2 and SJ3 (on the bottom of the board) open (the default).
+    If you're connecting the Coulomb Counter to a 5V system, leave solder jumpers SJ2 and SJ3 (on the bottom of the board) open (the default).
 
-** If you're connecting the Coulomb Counter to a 3.3V system, close both SJ2 and SJ3.
+    If you're connecting the Coulomb Counter to a 3.3V system, close both SJ2 and SJ3.
 
 * Hook up the I/O lines:
 
-** Connect VIO to your system's VCC (3.3V or 5V) line.
+    Connect VIO to your system's VCC (3.3V or 5V) line.
 
-** Connect GND to your system's ground line.
+    Connect GND to your system's ground line.
 
-** Connect INT to your system's interrupt input (D3)
+    Connect INT to your system's interrupt input (D3)
 
-** Connect POL to an I/O pin (D4)
+    Connect POL to an I/O pin (D4)
 
 * Connect the IN header or the JST connector to your power source (up to 8.5V)
 
