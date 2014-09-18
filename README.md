@@ -10,7 +10,7 @@ LTC4150_Coulomb_Counter_BOB
 
 ###What it does:
 
-The LTC4150 Coulomb Counter monitors current passing through it (from the IN header or JST connector to the OUT header). Each time 0.1707 mAh passes through the device, the INT* pin will pulse low. Or to put it another way, the INT* pin will pulse low 5859 times for each Ah that passes through it.
+The LTC4150 Coulomb Counter monitors current passing through it (from the IN header or JST connector to the OUT header). Each time 0.1707 mAh passes through the device, the INT pin will pulse low. Or to put it another way, the INT pin will pulse low 5859 times for each Ah that passes through it.
 
 There is also a POL pin that you can check each time INT goes low. POL will be L for current going from IN to OUT, and H for current going from OUT to IN (battery charging).
 
@@ -21,13 +21,19 @@ The Coulomb Counter can accommodate power supplies up to 8.5V and up to 1A.
 ###Quickstart (Arduino):
 
 * Configure the jumpers:
+
 ** If you're connecting the Coulomb Counter to a 5V system, leave solder jumpers SJ2 and SJ3 (on the bottom of the board) open (the default).
+
 ** If you're connecting the Coulomb Counter to a 3.3V system, close both SJ2 and SJ3.
 
 * Hook up the I/O lines:
+
 ** Connect VIO to your system's VCC (3.3V or 5V) line.
+
 ** Connect GND to your system's ground line.
+
 ** Connect INT to your system's interrupt input (D3)
+
 ** Connect POL to an I/O pin (D4)
 
 * Connect the IN header or the JST connector to your power source (up to 8.5V)
