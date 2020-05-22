@@ -4,7 +4,7 @@ SparkFun Coulomb Counter Breakout - LTC4150
 [![SparkFun Coulomb Counter Breakout - LTC4150
 ](https://cdn.sparkfun.com//assets/parts/8/6/3/7/12052-01.jpg)](https://www.sparkfun.com/products/12052)
 
-[SparkFun Coulomb Counter Breakout - LTC4150 [ BOB-12052 ]](https://www.sparkfun.com/products/12052)
+_[SparkFun Coulomb Counter Breakout - LTC4150 [ BOB-12052 ]](https://www.sparkfun.com/products/12052)_
 
 
 *Breakout board for the Linear Tech LTC4150 Coulomb Counter (bidirectional current sensor / battery gauge)*
