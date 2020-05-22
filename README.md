@@ -1,14 +1,13 @@
-LTC4150_Coulomb_Counter_BOB
+SparkFun Coulomb Counter Breakout - LTC4150
 ===========================
 
+[![SparkFun Coulomb Counter Breakout - LTC4150
+](https://cdn.sparkfun.com//assets/parts/8/6/3/7/12052-01.jpg)](https://www.sparkfun.com/products/12052)
+
+[SparkFun Coulomb Counter Breakout - LTC4150 [ BOB-12052 ]](https://www.sparkfun.com/products/12052)
+
+
 *Breakout board for the Linear Tech LTC4150 Coulomb Counter (bidirectional current sensor / battery gauge)*
-
-* Product page: [https://www.sparkfun.com/products/12052](https://www.sparkfun.com/products/12052)
-* Hookup guide: [https://learn.sparkfun.com/tutorials/ltc4150-coulomb-counter-hookup-guide](https://learn.sparkfun.com/tutorials/ltc4150-coulomb-counter-hookup-guide)
-* Datasheet: [https://cdn.sparkfun.com/datasheets/BreakoutBoards/LTC4150fc.pdf](https://cdn.sparkfun.com/datasheets/BreakoutBoards/LTC4150fc.pdf)
-* Schematic: [https://cdn.sparkfun.com/datasheets/BreakoutBoards/LTC4150_BOB_v10.pdf](https://cdn.sparkfun.com/datasheets/BreakoutBoards/LTC4150_BOB_v10.pdf)
-
-###What it does:
 
 The LTC4150 Coulomb Counter monitors current passing through it (from the IN header or JST connector to the OUT header). Each time 0.1707 mAh passes through the device, the INT pin will pulse low. Or to put it another way, the INT pin will pulse low 5859 times for each Ah that passes through it.
 
@@ -18,7 +17,8 @@ If you count these pulses and add or subtract from a total depending on the POL 
 
 The Coulomb Counter can accommodate power supplies up to 8.5V and up to 1A.
 
-###Quickstart (Arduino):
+Quickstart (Arduino)
+-------------------
 
 * Configure the jumpers:
 
@@ -45,3 +45,17 @@ The Coulomb Counter can accommodate power supplies up to 8.5V and up to 1A.
 See the [Hookup Guide](https://learn.sparkfun.com/tutorials/ltc4150-coulomb-counter-hookup-guide) for much more information.
 
 Have fun! -Your friends at SparkFun
+
+Repository Contents
+-------------------
+
+* **/Documentation** - Data sheets, additional product information
+* **/Hardware** - Eagle design files (.brd, .sch)
+* **/Production** - Production panel files (.brd)
+* **/Software** - Arduino example code
+
+Documentation
+--------------
+
+* **[Hookup Guide](https://learn.sparkfun.com/tutorials/ltc4150-coulomb-counter-hookup-guide)** - Basic hookup guide
+
