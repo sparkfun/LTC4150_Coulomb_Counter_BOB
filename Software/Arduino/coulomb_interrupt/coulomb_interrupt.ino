@@ -163,7 +163,7 @@ void setup()
   // On 328 Arduinos, you may also use D2 (INT0), change '1' to '0'. 
 
   isrflag = false;
-  attachInterrupt(1,myISR,FALLING);
+  attachInterrupt(digitalPinToInterrupt(INT),myISR,FALLING);
 }
 
 void loop()
